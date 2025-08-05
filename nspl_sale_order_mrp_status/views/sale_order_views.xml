@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--  Form View Inherit -->
+    <record id="view_order_form_inherit_mfg_status" model="ir.ui.view">
+        <field name="name">sale.order.form.mfg.status</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Smart Button Section -->
+            <xpath expr="//sheet" position="inside">
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_view_mrp_orders"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-industry"
+                            invisible="mrp_order_count == 0">
+                        <field name="mrp_order_count" widget="statinfo" string="Manufacturing"/>
+                    </button>
+                </div>
+            </xpath>
+
+
+             <!-- Add manufacturing_status only in Other Info tab -->
+            <xpath expr="//page[@name='other_information']/group" position="inside">
+                <group string="Manufacturing">
+                    <field name="manufacturing_status" readonly="1"/>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!--  List View Inherit -->
+    <record id="view_order_tree_inherit_mfg_status" model="ir.ui.view">
+        <field name="name">sale.order.tree.mfg.status</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="manufacturing_status"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
